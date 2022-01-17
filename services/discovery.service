@@ -7,7 +7,7 @@ After=network.target
 Type=simple
 User=pi
 WorkingDirectory=/home/pi/APGateway/apps
-ExecStart=/usr/bin/python3 /home/pi/APGateway/apps/discovery.py
+ExecStart=/usr/bin/python3 /home/pi/APGateway/apps/discover.py
 Restart=always
 TimeoutSec=10
 

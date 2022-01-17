@@ -8,3 +8,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable discovery.service
 sudo systemctl enable capture.service
 sudo systemctl enable configserver.service
+
+sudo systemctl start discovery.service
+sudo systemctl start configserver.service
+sudo systemctl start capture.service
