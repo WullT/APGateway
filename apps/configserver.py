@@ -48,18 +48,23 @@ def get_states():
     else:
         states["discovery"] = "stopped"
         states["discovery_category"] = "danger"
-    total, used, free = shutil.disk_usage(sqliteadapter.get_data_dir())
-    # total, used, free = shutil.disk_usage("/")
-    total_gb = round(total / (1024 ** 3), 2)
-    percent = round(used / total * 100, 2)
-    if percent > 90:
-        states["data_category"] = "danger"
-    elif percent > 80:
+    try:
+        total, used, free = shutil.disk_usage(sqliteadapter.get_data_dir())
+        # total, used, free = shutil.disk_usage("/")
+        total_gb = round(total / (1024 ** 3), 2)
+        percent = round(used / total * 100, 2)
+        if percent > 90:
+            states["data_category"] = "danger"
+        elif percent > 80:
+            states["data_category"] = "warning"
+        else:
+            states["data_category"] = "success"
+        states["disk_usage"] = str(percent) + " %"
+        states["disk_total"] = str(total_gb) + " GB"
+    except:
+        states["disk_usage"] = "unknown"
+        states["disk_total"] = "unknown"
         states["data_category"] = "warning"
-    else:
-        states["data_category"] = "success"
-    states["disk_usage"] = str(percent) + " %"
-    states["disk_total"] = str(total_gb) + " GB"
 
     return states
 
