@@ -77,7 +77,7 @@ def cam_ready(cam: Camera):
             - utc_time.hour * 60
             - utc_time.minute
         )
-        if (time_until_start <= 0) and (time_until_stop >= 0):
+        if (time_until_start <= 0) and (time_until_stop > 0):
             if (cam.timestamp + datetime.timedelta(seconds=cam.interval)) <= utc_time:
                 return True
     return False
