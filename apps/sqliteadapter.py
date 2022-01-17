@@ -338,6 +338,9 @@ def update_global_config(data_dir):
     con.commit()
     cur.close()
     con.close()
+    if not os.path.exists(data_dir):
+        os.makedirs(data_dir)
+
 
 
 def update_default_config(

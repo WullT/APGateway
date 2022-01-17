@@ -28,11 +28,11 @@ class Camera:
     enabled: int
 
 
-output_dir = sqliteadapter.get_data_dir()
+data_dir = sqliteadapter.get_data_dir()
 
 
-if not os.path.exists(output_dir):
-    os.makedirs(output_dir)
+if not os.path.exists(data_dir):
+    os.makedirs(data_dir)
 
 
 def get_cameras():
@@ -92,7 +92,7 @@ def capture_from(cam: Camera):
     sqliteadapter.update_timestamp(cam.id, utc_time)
     filename = cam.id + "_" + utc_time.strftime("%Y-%m-%dT%H-%M-%SZ") + ".jpg"
     savepath = (
-        output_dir
+        data_dir
         + "/"
         + cam.id
         + "/"
@@ -138,6 +138,7 @@ def capture_all():
 while True:
     t0 = time.time()
     cameras = get_cameras()
+    data_dir = sqliteadapter.get_data_dir()
     capture_all()
     d = time.time() - t0
     if d < check_interval:
