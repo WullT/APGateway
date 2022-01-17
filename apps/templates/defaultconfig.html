@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Global Configuration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+        integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous" />
+</head>
+
+<body>
+    <div class="container">
+        <form id="camform" method="post" action="">
+
+            <div class="row">
+                <h3 class="mt-4 mb-3">Data Directory<br><small class="text-muted"></small></h3>
+
+                <div class="col-12 mb-4">
+                    <div class="form-group">
+                        <label for="data_dir">Directory to store data</label>
+                        <input type="text" class="form-control" id="data_dir" name="data_dir" value="{{data_dir}}">
+                    </div>
+                </div>
+                <h3 class="mt-4 mb-3">Default Camera Configuration<br><small class="text-muted"></small></h3>
+
+                <div class="col-12 mb-4">
+
+                    <div class="form-group">
+                        <label for="port">Camera Port</label>
+                        <input type="number" class="form-control" id="port" name="port" value="{{glob.port}}">
+                    </div><br>
+
+                    <div class="form-group">
+                        <label for="url">URL Action</label>
+                        <input type="text" class="form-control" id="url" name="url" value="{{glob.action}}">
+                    </div><br>
+
+                    <div class="form-group">
+                        <label for="interval">Capture Interval [s]</label>
+                        <input type="number" class="form-control" id="interval" name="interval"
+                            value="{{glob.interval}}">
+                    </div><br>
+
+                    <div class="form-group">
+                        <label for="record_start_time">Record Start time [utc]</label>
+                        <input type="time" class="form-control" id="record_start_time" name="record_start_time"
+                            value="{{glob.record_start_time}}">
+                    </div><br>
+
+                    <div class="form-group">
+                        <label for="record_stop_time">Record Stop time [utc]</label>
+                        <input type="time" class="form-control" id="record_stop_time" name="record_stop_time"
+                            value="{{glob.record_stop_time}}">
+                    </div><br>
+
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" value="{{glob.username}}">
+                    </div><br>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="text" class="form-control" id="password" name="password" value="{{glob.password}}">
+                    </div><br>
+
+                    <div class="form-check">
+                        <label for="enabled">Enabled by default</label>
+                        <input type="checkbox" class="form-check-input" id="enabled" name="enabled" {{glob.state_c}}>
+                    </div><br>
+
+
+
+                    <button type="submit" form="camform" class="btn btn-primary">Apply</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+</body>
+
+</html>
