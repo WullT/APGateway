@@ -55,7 +55,7 @@ cur.execute(
 )
 cur.execute(
     """CREATE TABLE IF NOT EXISTS global_config
-               (data_dir text UNIQUE)"""
+               (data_dir text, id integer PRIMARY KEY)"""
 )
 cur.execute("""SELECT * FROM default_values""")
 default_values = cur.fetchall()
@@ -88,7 +88,7 @@ else:
     default_record_stop_minute = default_values[0][8]
     default_enabled = default_values[0][9]
 
-cur.execute("""INSERT OR IGNORE INTO global_config VALUES (?)""", (default_data_dir,))
+cur.execute("""INSERT OR IGNORE INTO global_config VALUES (?,1)""", (default_data_dir,))
 con.commit()
 cur.close()
 con.close()
@@ -281,7 +281,7 @@ def update_timestamp(camera_id, new_time):
 def get_data_dir():
     con = sqlite3.connect(db_path)
     cur = con.cursor()
-    cur.execute("""SELECT * FROM global_config""")
+    cur.execute("""SELECT data_dir FROM global_config""")
     rows = cur.fetchall()
     cur.close()
     con.close()
@@ -334,7 +334,7 @@ def update_camera_config(
 def update_global_config(data_dir):
     con = sqlite3.connect(db_path)
     cur = con.cursor()
-    cur.execute("""UPDATE global_config SET data_dir = ?""", (data_dir,))
+    cur.execute("""UPDATE global_config SET data_dir = ? WHERE id = 1""", (data_dir,))
     con.commit()
     cur.close()
     con.close()
