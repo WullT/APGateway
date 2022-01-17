@@ -155,24 +155,25 @@ def get_default_values_json():
 
 
 def add_new_camera(camera_id):
+    default_values = get_default_values_json()
     con = sqlite3.connect(db_path)
     cur = con.cursor()
     dev_id = camera_id.split("cam-")[1]
-    url = "http://" + camera_id + ".local:8080/?action=snapshot"
+    url = "http://" + camera_id + ".local:"+str(default_values["port"])+default_values["action"]
     cur.execute(
         """INSERT OR IGNORE INTO cameras VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)""",
         (
             dev_id,
             url,
-            default_interval,
-            default_username,
-            default_password,
+            default_values["interval"],
+            default_values["username"],
+            default_values["password"],
             datetime.datetime.utcnow(),
-            default_record_start_hour,
-            default_record_start_minute,
-            default_record_stop_hour,
-            default_record_stop_minute,
-            default_enabled,
+            default_values["record_start_hour"],
+            default_values["record_start_minute"],
+            default_values["record_stop_hour"],
+            default_values["record_stop_minute"],
+            default_values["enabled"],
             None,
         ),
     )
