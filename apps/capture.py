@@ -11,7 +11,7 @@ import shutil
 import sqliteadapter
 from dataclasses import dataclass
 
-check_interval = 5 # seconds to wait before checking again
+check_interval = 2 # seconds to wait before checking again
 connect_timeout = 1
 read_timeout = check_interval-connect_timeout
 
