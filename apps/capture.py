@@ -130,7 +130,7 @@ def capture_all():
         for camera in cameras:
             futures.append(executor.submit(capture_from, camera))
 
-    for future in as_completed(futures):
+    for future in as_completed(futures, timeout=check_interval*2):
         if not future.result() == None:
             print(future.result())
 
