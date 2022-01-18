@@ -13,15 +13,27 @@ discovery_scan_interval = 60
 
 
 def get_base_addr(interface):
-    gw = os.popen("ip -4 route show dev " + interface).read().split()
-    if len(gw) == 0:
+    try:
+        gw = os.popen("ip -4 route show dev " + interface).read()
+        base_address = None
+        if len(gw.split()) > 1:
+            if(gw.split()[0] == "default"):
+                base_address = gw.split()[2]
+            else:
+                gw = gw.split("\n")[1].split()
+                base_address = gw[gw.index('src') + 1]
+            if base_address is None:
+                return None
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            s.connect((base_address, 0))
+            addr = s.getsockname()[0].split(".")
+            s.close()
+            addr = addr[0] + "." + addr[1] + "." + addr[2] + "."
+            return addr
+        else:
+            return None
+    except:
         return None
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.connect((gw[2], 0))
-    addr = s.getsockname()[0].split(".")
-    s.close()
-    addr = addr[0] + "." + addr[1] + "." + addr[2] + "."
-    return addr
 
 
 found_cams = []
@@ -68,6 +80,7 @@ while True:
     t0 = time.time()
     scan_if("eth0")
     scan_if("wlan0")
+    scan_if("eth1")
     handle_results()
     t1 = time.time()
     found_cams = []
