@@ -11,7 +11,7 @@ import shutil
 import sqliteadapter
 from dataclasses import dataclass
 
-check_interval = 2 # seconds to wait before checking again
+check_interval = 5 # seconds to wait before checking again
 connect_timeout = 1
 read_timeout = check_interval-connect_timeout
 
@@ -143,5 +143,6 @@ while True:
     data_dir = sqliteadapter.get_data_dir()
     capture_all()
     d = time.time() - t0
+    print("capture_all() took", d, "seconds")
     if d < check_interval:
         time.sleep(check_interval - d)
