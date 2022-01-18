@@ -11,9 +11,9 @@ import shutil
 import sqliteadapter
 from dataclasses import dataclass
 
-check_interval = 5 # seconds to wait before checking again
-connect_timeout = check_interval/2
-read_timeout = check_interval
+check_interval = 10 # seconds to wait before checking again
+connect_timeout = 2
+read_timeout = check_interval-connect_timeout
 
 @dataclass
 class Camera:
