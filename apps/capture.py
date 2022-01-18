@@ -91,7 +91,7 @@ def capture_from(cam: Camera):
     url = cam.url
     print(url)
     utc_time = datetime.datetime.utcnow()
-    sqliteadapter.update_timestamp(cam.id, cam.timestamp+datetime.timedelta(seconds=cam.interval))
+    sqliteadapter.update_timestamp(cam.id, utc_time)
     filename = cam.id + "_" + utc_time.strftime("%Y-%m-%dT%H-%M-%SZ") + ".jpg"
     savepath = (
         data_dir
