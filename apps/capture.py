@@ -13,7 +13,7 @@ from dataclasses import dataclass
 
 check_interval = 5 # seconds to wait before checking again
 connect_timeout = 1
-read_timeout = check_interval-connect_timeout
+read_timeout = check_interval-connect_timeout -1
 
 @dataclass
 class Camera:
