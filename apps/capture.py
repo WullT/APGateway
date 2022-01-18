@@ -145,7 +145,7 @@ while True:
     capture_all()
     d = time.time() - t0
     print("capture_all() took", d, "seconds")
-    if d < check_interval:
-        print("sleeping", check_interval - d, "seconds")
-        time.sleep(check_interval - d)
+    #if d < check_interval:
+    #    print("sleeping", check_interval - d, "seconds")
+    #    time.sleep(check_interval - d)
         
