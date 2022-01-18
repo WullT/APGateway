@@ -132,9 +132,9 @@ def capture_all():
         for camera in cameras:
             futures.append(executor.submit(capture_from, camera))
 
-    for future in as_completed(futures):
-        if not future.result() == None:
-            print(future.result())
+#    for future in as_completed(futures):
+#        if not future.result() == None:
+#            print(future.result())
 
 
 while True:
