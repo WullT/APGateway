@@ -1,5 +1,6 @@
 # https://fhnw.mit-license.org/
 
+from sqlite3 import connect
 import requests
 from requests.auth import HTTPBasicAuth
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -11,7 +12,8 @@ import sqliteadapter
 from dataclasses import dataclass
 
 check_interval = 5 # seconds to wait before checking again
-
+connect_timeout = check_interval/2
+read_timeout = check_interval*2
 
 @dataclass
 class Camera:
@@ -107,7 +109,7 @@ def capture_from(cam: Camera):
             os.path.dirname(savepath), exist_ok=True
         )  # create path if not exists
         r = requests.get(
-            url, stream=True, auth=HTTPBasicAuth(cam.username, cam.password)
+            url, stream=True, auth=HTTPBasicAuth(cam.username, cam.password), timeout=(connect_timeout, read_timeout)
         )
         # print("Camera",camera_id,": status code=", r.status_code)
         if r.status_code == 200:
@@ -130,8 +132,7 @@ def capture_all():
         for camera in cameras:
             futures.append(executor.submit(capture_from, camera))
 
-    for future in as_completed(futures, timeout=check_interval*2):
-        print(future.cancel())
+    for future in as_completed(futures):
         if not future.result() == None:
             print(future.result())
 
