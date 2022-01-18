@@ -131,6 +131,7 @@ def capture_all():
             futures.append(executor.submit(capture_from, camera))
 
     for future in as_completed(futures, timeout=check_interval*2):
+        print(future.cancel())
         if not future.result() == None:
             print(future.result())
 
