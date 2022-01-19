@@ -11,7 +11,6 @@ app = Flask(__name__)
 def register():
     req = request.json
     if not req is None:
-        print(req)
         if "hostname" in req:
             hostname = req["hostname"]
             if hostname is not None and len(hostname) > 4:
