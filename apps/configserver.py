@@ -9,7 +9,7 @@ import os
 import shutil
 
 capture_svc_name = "capture.service"
-discovery_svc_name = "discovery.service"
+registrationserver_svc_name = "registrationserver.service"
 
 parser = argparse.ArgumentParser(description="APGateway Configuration Server")
 parser.add_argument("--user", "-u", type=str, help="basic auth username", required=True)
@@ -42,12 +42,12 @@ def get_states():
     else:
         states["capture"] = "stopped"
         states["capture_category"] = "danger"
-    if os.system("systemctl is-active --quiet " + discovery_svc_name) == 0:
-        states["discovery"] = "running"
-        states["discovery_category"] = "success"
+    if os.system("systemctl is-active --quiet " + registrationserver_svc_name) == 0:
+        states["registrationserver"] = "running"
+        states["registrationserver_category"] = "success"
     else:
-        states["discovery"] = "stopped"
-        states["discovery_category"] = "danger"
+        states["registrationserver"] = "stopped"
+        states["registrationserver_category"] = "danger"
     try:
         total, used, free = shutil.disk_usage(sqliteadapter.get_data_dir())
         # total, used, free = shutil.disk_usage("/")
