@@ -98,6 +98,14 @@ def updateCamera(id, req):
     )
 
 
+def addCamera(req):
+    dev_id = req["cam_id"]
+    url = req["url"]
+    username = req["username"]
+    password = req["password"]
+    sqliteadapter.add_camera_manual(dev_id, url, username, password)
+
+
 def updateGlobalConfig(req):
     data_dir = req["data_dir"]
     sqliteadapter.update_global_config(data_dir)
@@ -168,6 +176,18 @@ def camera(cameraid):
     else:
         req = request.form
         updateCamera(cameraid, req)
+        return redirect(url_for("index"))
+
+
+@app.route("/camera/add", methods=["GET", "POST"])
+@auth.login_required
+def add_camera():
+    if request.method == "GET":
+        default_values = sqliteadapter.get_default_values_json()
+        return render_template("addcamera.html", dv=default_values)
+    else:
+        req = request.form
+        addCamera(req)
         return redirect(url_for("index"))
 
 

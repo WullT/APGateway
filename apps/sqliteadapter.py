@@ -159,7 +159,13 @@ def add_new_camera(camera_id):
     con = sqlite3.connect(db_path)
     cur = con.cursor()
     dev_id = camera_id.split("cam-")[1]
-    url = "http://" + camera_id + ".local:"+str(default_values["port"])+default_values["action"]
+    url = (
+        "http://"
+        + camera_id
+        + ".local:"
+        + str(default_values["port"])
+        + default_values["action"]
+    )
     cur.execute(
         """INSERT OR IGNORE INTO cameras VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)""",
         (
@@ -168,6 +174,32 @@ def add_new_camera(camera_id):
             default_values["interval"],
             default_values["username"],
             default_values["password"],
+            datetime.datetime.utcnow(),
+            default_values["record_start_hour"],
+            default_values["record_start_minute"],
+            default_values["record_stop_hour"],
+            default_values["record_stop_minute"],
+            default_values["enabled"],
+            None,
+        ),
+    )
+    con.commit()
+    cur.close()
+    con.close()
+
+
+def add_camera_manual(camera_id, url, username, password):
+    default_values = get_default_values_json()
+    con = sqlite3.connect(db_path)
+    cur = con.cursor()
+    cur.execute(
+        """INSERT OR IGNORE INTO cameras VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)""",
+        (
+            camera_id,
+            url,
+            default_values["interval"],
+            username,
+            password,
             datetime.datetime.utcnow(),
             default_values["record_start_hour"],
             default_values["record_start_minute"],
@@ -340,7 +372,6 @@ def update_global_config(data_dir):
     con.close()
     if not os.path.exists(data_dir):
         os.makedirs(data_dir)
-
 
 
 def update_default_config(
