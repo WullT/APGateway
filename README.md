@@ -2,7 +2,7 @@
 
 Consists of
 
-* [discover](apps/discover.py), an application that scans all network interfaces for [PoECams](https://github.com/WullT/PoECam)
+* [registrationserver](apps/registrationserver.py), a http server used for automatic adding of new [PoECams](https://github.com/WullT/PoECam)
 * [capture](apps/capture.py), an application that downloads captures from the connected cameras
 * [configserver](apps/configserver.py), a local http server to configure the system
 
