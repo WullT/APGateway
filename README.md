@@ -43,7 +43,7 @@ curl https://raw.githubusercontent.com/WullT/APGateway/main/scripts/clone_instal
 ### Change login credentials for [configserver](apps/configserver.py)
 
 ```sh
-sudo nano /etc/systems/system/configserver.service
+sudo nano /etc/systemd/system/configserver.service
 ```
 In line 10, change username (default `admin`) and password (default `CHANGE_ME`)
 
